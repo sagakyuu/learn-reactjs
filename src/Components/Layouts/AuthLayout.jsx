@@ -19,7 +19,7 @@ export default function AuthLayout({ children, title }) {
           account?{" "}
           <Link
             to={`/${title.toLowerCase() === "login" ? "register" : "login"}`}
-            className="text-blue-900 underline"
+            className="text-blue-900 underline text-base font-bold"
           >
             {title.toLowerCase() === "login" ? "Register" : "Login"}
           </Link>
