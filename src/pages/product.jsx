@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 import CardProduct from "../Components/Fragments/CardProduct";
 import Button from "../Components/Elements/Button";
 import { useState } from "react";
+import Counterr from "../Components/Fragments/Counterr";
 // import Counter from "../Components/Fragments/Counterr/Counter";
 // import Counterr from "../Components/Fragments/Counterr";
 
@@ -134,6 +135,9 @@ export default function Product() {
             </table>
           </div>
         </div>
+      </div>
+      <div className="flex justify-center">
+        <Counterr />
       </div>
     </div>
   );

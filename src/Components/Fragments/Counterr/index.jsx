@@ -9,6 +9,11 @@ class Counterr extends Component {
     };
   }
 
+  componentDidMount() {
+    this.setState({ count: 10 });
+    console.log("componentDidMount");
+  }
+
   render() {
     return (
       <div>
