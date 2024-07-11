@@ -1,5 +1,6 @@
 import PropTypes from "prop-types";
 import Button from "../Elements/Button";
+import { Link } from "react-router-dom";
 
 export default function AuthLayout({ children, title }) {
   return (
@@ -17,9 +18,12 @@ export default function AuthLayout({ children, title }) {
         </Button>
         <p className="text-center">
           {title === "login" ? "Belum" : "Sudah"} Punya akun?{" "}
-          <a href="" className="text-blue-900 underline">
+          <Link
+            to={`/${title === "login" ? "register" : "login"}`}
+            className="text-blue-900 underline"
+          >
             {title === "login" ? "register" : "login"}
-          </a>
+          </Link>
         </p>
       </div>
     </form>
