@@ -19,7 +19,7 @@ function Header({ src }) {
 
 function Body({ title, children }) {
   return (
-    <div className="px-5 pb-5">
+    <div className="px-5 pb-5 h-20">
       <h5 className="text-xl text-white">{title}</h5>
       <p className="text-sm text-white text-justify">{children}</p>
     </div>

@@ -2,17 +2,21 @@ import PropTypes from "prop-types";
 import Button from "../Elements/Button";
 import { Link } from "react-router-dom";
 
-export default function AuthLayout({ children, title }) {
+export default function AuthLayout({ children, title, onSubmit }) {
   return (
-    <form action="" className="flex flex-col gap-3 max-w-xl px-5 py-8 ">
+    <form
+      action=""
+      className="flex flex-col gap-3 max-w-xl px-5 py-8 "
+      onSubmit={onSubmit}
+    >
       <div>
         <h1 className="text-2xl text-blue-600 font-bold mb-3">{title}</h1>
         <p className="">Welcome please enter your details</p>
       </div>
       {children}
       <div className="flex flex-col justify-end">
-        <Button variant="bg-sky-500">
-          {title === "login" ? "Login" : "Register"}
+        <Button variant="bg-sky-500" type={"submit"}>
+          {title.toLowerCase() === "login" ? title : "Register"}
         </Button>
         <p className="text-center text-sm font-semibold mt-2">
           {title.toLowerCase() === "login" ? "Don't" : "Alredy"} have an
@@ -32,4 +36,5 @@ export default function AuthLayout({ children, title }) {
 AuthLayout.propTypes = {
   children: PropTypes.node.isRequired,
   title: PropTypes.string,
+  onSubmit: PropTypes.func,
 };
