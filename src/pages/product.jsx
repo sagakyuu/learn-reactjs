@@ -1,10 +1,7 @@
 import { Link } from "react-router-dom";
 import CardProduct from "../Components/Fragments/CardProduct";
 import Button from "../Components/Elements/Button";
-import { useState } from "react";
-import Counterr from "../Components/Fragments/Counterr";
-// import Counter from "../Components/Fragments/Counterr/Counter";
-// import Counterr from "../Components/Fragments/Counterr";
+import { useEffect, useState } from "react";
 
 const products = [
   {
@@ -33,12 +30,25 @@ const products = [
 const email = localStorage.getItem("email");
 
 export default function Product() {
-  const [cart, setCart] = useState([
-    {
-      id: 1,
-      qty: 1,
-    },
-  ]);
+  const [cart, setCart] = useState([]);
+  const [totalPrice, setTotalPrice] = useState(0);
+
+  useEffect(() => {
+    setCart(JSON.parse(localStorage.getItem("cart")) || []);
+  }, []);
+
+  useEffect(() => {
+    if (cart.length > 0) {
+      const sum = cart.reduce((acc, itm) => {
+        const product = products.find((i) => i.id === itm.id);
+        return acc + product.price * itm.qty;
+      }, 0);
+
+      setTotalPrice(sum);
+      localStorage.setItem("cart", JSON.stringify(cart));
+    }
+  }, [cart]);
+
   function handleLogout() {
     localStorage.removeItem("email");
     localStorage.removeItem("password");
@@ -131,13 +141,20 @@ export default function Product() {
                     </tr>
                   );
                 })}
+                <tr className="px-2">
+                  <td className="border border-black">Total Price</td>
+                  <td colSpan={3} className="border border-black">
+                    Rp{" "}
+                    {totalPrice.toLocaleString("id-ID", {
+                      styles: "currency",
+                      currency: "IDR",
+                    })}
+                  </td>
+                </tr>
               </tbody>
             </table>
           </div>
         </div>
-      </div>
-      <div className="flex justify-center">
-        <Counterr />
       </div>
     </div>
   );
