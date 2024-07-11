@@ -26,11 +26,16 @@ function Body({ title, children }) {
   );
 }
 
-function Footer({ price }) {
+function Footer({ price, onClick, id }) {
   return (
     <div className="flex items-center justify-between px-5 pb-2">
-      <span className="text-white text-xl font-bold">Rp {price}</span>
-      <Button variant="bg-blue-600">Add to cart</Button>
+      <span className="text-white text-xl font-bold">
+        Rp{" "}
+        {price.toLocaleString("id-ID", { styles: "currency", currency: "IDR" })}
+      </span>
+      <Button variant="bg-blue-600" onClick={() => onClick(id)}>
+        Add to cart
+      </Button>
     </div>
   );
 }
@@ -50,6 +55,8 @@ Body.propTypes = {
 
 Footer.propTypes = {
   price: PropTypes.number,
+  onClick: PropTypes.func,
+  id: PropTypes.number,
 };
 
 CardProduct.propTypes = {

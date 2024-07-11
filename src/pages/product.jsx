@@ -1,6 +1,9 @@
 import { Link } from "react-router-dom";
 import CardProduct from "../Components/Fragments/CardProduct";
 import Button from "../Components/Elements/Button";
+import { useState } from "react";
+// import Counter from "../Components/Fragments/Counterr/Counter";
+// import Counterr from "../Components/Fragments/Counterr";
 
 const products = [
   {
@@ -15,28 +18,48 @@ const products = [
     name: "Sepatu Lama",
     images: "/images/img1.jpg",
     desc: "Speatu Lama lohhh",
-    price: 1000000,
+    price: 500000,
   },
   {
     id: 3,
     name: "Sepatu Tranding",
     images: "/images/img1.jpg",
     desc: "ini adalah sepatu trendin",
-    price: 1000000,
+    price: 1500000,
   },
 ];
 
 const email = localStorage.getItem("email");
 
 export default function Product() {
+  const [cart, setCart] = useState([
+    {
+      id: 1,
+      qty: 1,
+    },
+  ]);
   function handleLogout() {
     localStorage.removeItem("email");
     localStorage.removeItem("password");
     window.location.href = "/login";
   }
 
+  const handlerAddToCart = (id) => {
+    if (cart.find((it) => it.id === id)) {
+      setCart(cart.map((i) => (i.id === id ? { ...i, qty: i.qty + 1 } : i)));
+    } else {
+      setCart([
+        ...cart,
+        {
+          id,
+          qty: 1,
+        },
+      ]);
+    }
+  };
+
   return (
-    <div className="">
+    <div className="pb-10">
       <nav className="w-full flex justify-between px-3 py-2 bg-blue-600 items-center">
         <h1>Navbar</h1>
         <ul className="flex gap-3">
@@ -53,16 +76,64 @@ export default function Product() {
           <Button onClick={handleLogout}>Logout</Button>
         </div>
       </nav>
-      <div className="flex justify-center py-5 flex-wrap gap-3">
-        {products.map((product) => (
-          <CardProduct key={product.id}>
-            <CardProduct.Header src={product.images} />
-            <CardProduct.Body title={product.name}>
-              {product.desc}
-            </CardProduct.Body>
-            <CardProduct.Footer price={product.price} />
-          </CardProduct>
-        ))}
+      <div className="flex p-5 h-full">
+        <div className="w-2/3 flex flex-wrap gap-1">
+          {products.map((product) => (
+            <CardProduct key={product.id}>
+              <CardProduct.Header src={product.images} />
+              <CardProduct.Body title={product.name}>
+                {product.desc}
+              </CardProduct.Body>
+              <CardProduct.Footer
+                price={product.price}
+                id={product.id}
+                onClick={handlerAddToCart}
+              />
+            </CardProduct>
+          ))}
+        </div>
+        <div className="w-1/3">
+          <h1 className="text-2xl font-bold text-blue-600 px-5">Cart</h1>
+          <div className="">
+            <table className="text-right table-auto border border-spacing-x-5 ">
+              <thead className="border">
+                <tr>
+                  <th className="border px-2 border-black">Name</th>
+                  <th className="border px-2 border-black">Price</th>
+                  <th className="border px-2 border-black">Qty</th>
+                  <th className="border px-2 border-black">Total</th>
+                </tr>
+              </thead>
+              <tbody>
+                {cart.map((i) => {
+                  const product = products.find((v) => v.id === i.id);
+                  return (
+                    <tr key={i.id} className="border">
+                      <td className="border px-2 border-black">
+                        {product.name}
+                      </td>
+                      <td className="border px-2 border-black">
+                        Rp{" "}
+                        {product.price.toLocaleString("id-ID", {
+                          styles: "currency",
+                          currency: "IDR",
+                        })}
+                      </td>
+                      <td className="border px-2 border-black">{i.qty}</td>
+                      <td className="border px-2 border-black">
+                        Rp{" "}
+                        {(product.price * i.qty).toLocaleString("id-ID", {
+                          styles: "currency",
+                          currency: "IDR",
+                        })}
+                      </td>
+                    </tr>
+                  );
+                })}
+              </tbody>
+            </table>
+          </div>
+        </div>
       </div>
     </div>
   );
