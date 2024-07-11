@@ -4,7 +4,7 @@ import AuthLayout from "../Components/Layouts/AuthLayout";
 export default function Login() {
   return (
     <div className="min-h-screen w-full flex justify-center items-center">
-      <AuthLayout title={"login"}>
+      <AuthLayout title={"Login"}>
         <FormLogin />
       </AuthLayout>
     </div>
