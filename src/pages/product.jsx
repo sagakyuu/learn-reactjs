@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import CardProduct from "../Components/Fragments/CardProduct";
 import Button from "../Components/Elements/Button";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 const products = [
   {
@@ -68,6 +68,25 @@ export default function Product() {
       ]);
     }
   };
+
+  // ! useRef
+  const cartRef = useRef(JSON.parse(localStorage.getItem("cart")) || []);
+
+  const handlerAddToCartRef = (id) => {
+    cartRef.current = [...cartRef.current, { id, qty: 1 }];
+    localStorage.setItem("cart", JSON.stringify(cartRef.current));
+  };
+
+  const totalPriceRef = useRef(null);
+  console.log(totalPriceRef);
+
+  useEffect(() => {
+    if (cart.length > 0) {
+      totalPriceRef.current.style.display = "table-row";
+    } else {
+      totalPriceRef.current.style.display = "none";
+    }
+  }, [cart]);
 
   return (
     <div className="pb-10">
@@ -141,7 +160,7 @@ export default function Product() {
                     </tr>
                   );
                 })}
-                <tr className="px-2">
+                <tr className="px-2" ref={totalPriceRef}>
                   <td className="border border-black">Total Price</td>
                   <td colSpan={3} className="border border-black">
                     Rp{" "}

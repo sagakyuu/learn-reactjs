@@ -1,4 +1,4 @@
-import FormRegister from "../Components/Fragments/FromRegister";
+import FormRegister from "../Components/Fragments/FormRegister";
 import AuthLayout from "../Components/Layouts/AuthLayout";
 
 export default function Register() {

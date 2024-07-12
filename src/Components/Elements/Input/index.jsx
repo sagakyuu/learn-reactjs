@@ -1,15 +1,16 @@
 import PropTypes from "prop-types";
 import Input from "./Input";
 import Label from "./Label";
+import { forwardRef } from "react";
 
-export default function Inputs({ children, name, type, placeholder }) {
+const Inputs = forwardRef(({ children, name, type, placeholder }, ref) => {
   return (
     <div className="flex flex-col gap-1">
       <Label name={name}>{children}</Label>
-      <Input name={name} type={type} placeholder={placeholder} />
+      <Input name={name} type={type} placeholder={placeholder} ref={ref} />
     </div>
   );
-}
+});
 
 Inputs.propTypes = {
   children: PropTypes.node,
@@ -17,3 +18,5 @@ Inputs.propTypes = {
   type: PropTypes.string,
   placeholder: PropTypes.string,
 };
+
+export default Inputs;
