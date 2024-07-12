@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 import CardProduct from "../Components/Fragments/CardProduct";
 import Button from "../Components/Elements/Button";
 import { useEffect, useRef, useState } from "react";
-import { getProduct } from "../lib/service/product.service";
+import { getProducts } from "../lib/service/product.service";
 import useLogin from "../lib/hooks/useLogin";
 
 export default function Product() {
@@ -16,7 +16,7 @@ export default function Product() {
   }, []);
 
   useEffect(() => {
-    getProduct((items) => setProducts(items));
+    getProducts((items) => setProducts(items));
   }, []);
 
   useEffect(() => {
@@ -92,8 +92,14 @@ export default function Product() {
           {products.length > 0 &&
             products.map((product) => (
               <CardProduct key={product.id}>
-                <CardProduct.Header src={product.image} />
-                <CardProduct.Body title={product.title}>
+                <CardProduct.Header
+                  src={product.image}
+                  to={`/product/${product.id}`}
+                />
+                <CardProduct.Body
+                  title={product.title}
+                  to={`/product/${product.id}`}
+                >
                   {product.description}
                 </CardProduct.Body>
                 <CardProduct.Footer
