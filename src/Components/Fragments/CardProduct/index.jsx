@@ -12,16 +12,22 @@ export default function CardProduct({ children }) {
 function Header({ src }) {
   return (
     <a href="">
-      <img src={src} alt="product" className="p-8 rounded-l-lg" />
+      <img
+        src={src}
+        alt="product"
+        className="p-8 rounded-l-lg aspect-square w-96 object-fill"
+      />
     </a>
   );
 }
 
 function Body({ title, children }) {
   return (
-    <div className="px-5 pb-5 h-20">
-      <h5 className="text-xl text-white">{title}</h5>
-      <p className="text-sm text-white text-justify">{children}</p>
+    <div className="px-5 pb-5 ">
+      <h5 className="text-xl text-white">{title.substring(0, 20)} ...</h5>
+      <p className="text-sm text-white text-justify">
+        {children.substring(0, 100)} ...
+      </p>
     </div>
   );
 }
@@ -30,8 +36,11 @@ function Footer({ price, onClick, id }) {
   return (
     <div className="flex items-center justify-between px-5 pb-2">
       <span className="text-white text-xl font-bold">
-        Rp{" "}
-        {price.toLocaleString("id-ID", { styles: "currency", currency: "IDR" })}
+        $
+        {price.toLocaleString("us-US", {
+          styles: "currency",
+          currency: "USD",
+        })}
       </span>
       <Button variant="bg-blue-600" onClick={() => onClick(id)}>
         Add to cart
