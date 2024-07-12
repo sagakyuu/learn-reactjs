@@ -1,22 +1,24 @@
+import PropTypes from "prop-types";
 import { useEffect, useRef } from "react";
 import Inputs from "../../Elements/Input";
 
-export default function FormLogin() {
-  const emailRef = useRef(null);
-  console.log(emailRef);
+export default function FormLogin({ failedData }) {
+  const usernameRef = useRef(null);
+  console.log(usernameRef);
   useEffect(() => {
-    emailRef.current.focus();
+    usernameRef.current.focus();
   }, []);
 
   return (
     <>
+      <p className="text-red-600 text-sm text-center">{failedData}</p>
       <Inputs
-        type={"email"}
-        name={"email"}
-        placeholder={"example@mail.com"}
-        ref={emailRef}
+        type={"text"}
+        name={"username"}
+        placeholder={"insert tour username here ..."}
+        ref={usernameRef}
       >
-        Email
+        Username
       </Inputs>
       <Inputs type={"password"} name={"password"} placeholder={"********"}>
         Password
@@ -24,3 +26,7 @@ export default function FormLogin() {
     </>
   );
 }
+
+FormLogin.propTypes = {
+  failedData: PropTypes.string,
+};

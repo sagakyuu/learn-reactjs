@@ -3,20 +3,20 @@ import CardProduct from "../Components/Fragments/CardProduct";
 import Button from "../Components/Elements/Button";
 import { useEffect, useRef, useState } from "react";
 import { getProduct } from "../lib/service/product.service";
-
-const email = localStorage.getItem("email");
+import useLogin from "../lib/hooks/useLogin";
 
 export default function Product() {
   const [cart, setCart] = useState([]);
   const [totalPrice, setTotalPrice] = useState(0);
   const [products, setProducts] = useState([]);
+  const username = useLogin();
 
   useEffect(() => {
     setCart(JSON.parse(localStorage.getItem("cart")) || []);
   }, []);
 
   useEffect(() => {
-    getProduct((data) => setProducts(data));
+    getProduct((items) => setProducts(items));
   }, []);
 
   useEffect(() => {
@@ -32,8 +32,8 @@ export default function Product() {
   }, [cart, products]);
 
   function handleLogout() {
-    localStorage.removeItem("email");
-    localStorage.removeItem("password");
+    localStorage.removeItem("cart");
+    localStorage.removeItem("token");
     window.location.href = "/login";
   }
 
@@ -83,7 +83,7 @@ export default function Product() {
         </ul>
 
         <div className="flex gap-2 items-center">
-          <p className="text-white">{email}</p>
+          <p className="text-white">{username}</p>
           <Button onClick={handleLogout}>Logout</Button>
         </div>
       </nav>

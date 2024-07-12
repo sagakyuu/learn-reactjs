@@ -3,6 +3,7 @@ import Home from "../../pages/home";
 import Register from "../../pages/register";
 import Login from "../../pages/login";
 import Product from "../../pages/product";
+import Profile from "../../pages/profile";
 
 const router = createBrowserRouter([
   {
@@ -20,6 +21,10 @@ const router = createBrowserRouter([
   {
     path: "/product",
     element: <Product />,
+  },
+  {
+    path: "/profile",
+    element: <Profile />,
   },
 ]);
 
